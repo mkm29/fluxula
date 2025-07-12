@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tetragon
+  namespace: flux-system
+spec:
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  interval: 10m0s
+  targetNamespace: tetragon
+  chart:
+    spec:
+      chart: tetragon
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: cilium
+        namespace: flux-system
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
